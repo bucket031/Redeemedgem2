@@ -1,0 +1,64 @@
+# Redeemed Gem config. Everything under shackles/slam/limitless/general/effects is editable in-game with /rg config.
+shackles:
+  charges: 5
+  ground-seconds: 1.5
+  damage-hearts: 1.5
+  recharge-seconds: 90
+slam:
+  # Charges before the cooldown starts (like Shackles).
+  charges: 2
+  radius: 10
+  damage-hearts: 5
+  fling-distance: 10
+  cooldown-seconds: 130
+limitless:
+  radius: 8
+  # Hearts removed from every player in the radius (max health) for the whole duration.
+  hearts-taken: 5
+  # Hearts added to the gem holder (max health) for the whole duration.
+  hearts-given: 5
+  lock-radius: 2
+  lock-seconds: 5
+  duration-seconds: 20
+  cooldown-seconds: 120
+  armor-mend-per-second: 4
+passive:
+  # Every Nth hit gives the target Darkness.
+  darkness-every-hits: 8
+  darkness-seconds: 5
+  # Chance per hit (0.05 = 1 in 20) of a critical hit: Strength <level> for that one hit (+3 damage per level).
+  crit-chance: 0.05
+  crit-strength-level: 4
+awakened:
+  # Extra max hearts while an Awakened gem is in the inventory.
+  bonus-hearts: 20
+general:
+  double-click-ms: 600
+effects:
+  # Multiplies how many particles every ability spawns (1 = old amount).
+  particle-multiplier: 2.0
+# Disguise textures: the real Bliss gem models (prismarine_shard custom_model_data from the Bliss pack, tier 2 set).
+# Change a number if a disguise shows the wrong colour or tier. Use /rg debug while holding a real gem to read its number.
+disguise-model-data:
+  strength: 10
+  fire: 2
+  life: 4
+  puff: 6
+  wealth: 8
+  speed: 12
+  astra: 14
+  flux: 98
+# How Redeemed Gem players get their Bliss gem removed (BlissPlugin is closed source, so we recognise the item).
+# An item counts as a Bliss gem if ANY of these match. Run /rg debug with a real gem in hand to see what it looks like.
+bliss-gem-detect:
+  # 1) material + custom_model_data (the Bliss pack's gem models)
+  materials: [PRISMARINE_SHARD, AMETHYST_SHARD]
+  model-data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 108, 117, 118, 128, 137, 138, 157, 158, 177, 178, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008]
+  # 2) name / item name / lore text contains one of the names AND the required word
+  names: [strength, fire, wealth, speed, puff, astra, life, flux]
+  required-word: gem
+  # 3) any persistent-data key from these plugin namespaces whose key contains "gem"
+  pdc-namespaces: [blissplugin, bliss]
+  # Console commands run on /rg start (placeholder {player}). Empty by default.
+  # Do NOT use "bliss reset" here - Bliss documents it as "back to Strength T1".
+  start-commands: []
