@@ -188,6 +188,9 @@ public final class Gems {
     }
 
     // ------------------------------------------------------------ Bliss gem detection
+    /** Works on API versions without ItemMeta#hasCustomModelDataComponent. */
+    private static boolean hasCmd(ItemMeta m) { return !m.getCustomModelDataComponent().getFloats().isEmpty(); }
+
     private static String plain(Component c) { return c == null ? "" : PlainTextComponentSerializer.plainText().serialize(c).toLowerCase(Locale.ROOT); }
 
     /** True if the item looks like a Bliss gem. See bliss-gem-detect in config.yml; /rg debug shows what a real gem looks like. */
@@ -197,7 +200,7 @@ public final class Gems {
         var cfg = pl.getConfig();
 
         // 1) material + custom_model_data
-        if (cfg.getStringList("bliss-gem-detect.materials").contains(it.getType().name()) && m.hasCustomModelDataComponent()) {
+        if (cfg.getStringList("bliss-gem-detect.materials").contains(it.getType().name()) && hasCmd(m)) {
             List<Integer> ids = cfg.getIntegerList("bliss-gem-detect.model-data");
             for (Float f : m.getCustomModelDataComponent().getFloats()) if (ids.contains(Math.round(f))) return true;
         }
@@ -240,7 +243,7 @@ public final class Gems {
         if (m == null) return out;
         out.add("Name: " + plain(m.displayName()) + " | item name: " + (m.hasItemName() ? plain(m.itemName()) : "-"));
         out.add("Item model: " + (m.hasItemModel() ? m.getItemModel() : "-"));
-        if (m.hasCustomModelDataComponent()) out.add("Custom model data: " + m.getCustomModelDataComponent().getFloats());
+        if (hasCmd(m)) out.add("Custom model data: " + m.getCustomModelDataComponent().getFloats());
         else out.add("Custom model data: -");
         List<String> keys = new ArrayList<>();
         for (NamespacedKey k : m.getPersistentDataContainer().getKeys()) keys.add(k.toString());
