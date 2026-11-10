@@ -314,9 +314,9 @@ public final class AbilityListener implements Listener {
         long ready = slamReady.getOrDefault(id, 0L);
         if (ready > now) { p.sendActionBar(Component.text("Shattered Slam: " + time(secs(ready - now)), NamedTextColor.GRAY)); return; }
         int max = Math.max(1, (int) d("slam.charges"));
-        int c = slamCharges.getOrDefault(id, max) - 1;
-        slamCharges.put(id, c);
-        if (c <= 0) slamReady.put(id, now + ms("slam.cooldown-seconds"));
+        int chargesLeft = slamCharges.getOrDefault(id, max) - 1;
+        slamCharges.put(id, chargesLeft);
+        if (chargesLeft <= 0) slamReady.put(id, now + ms("slam.cooldown-seconds"));
         slamActive.put(id, now + 1800L);
 
         double r = d("slam.radius");
